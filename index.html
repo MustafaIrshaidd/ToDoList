@@ -17,15 +17,16 @@
     <!-- CSS -->
     <link rel="stylesheet" href="src/css/public.css" />
     <link rel="stylesheet" href="src/css/search.css" />
-    <link rel="stylesheet" href="src/css/addcard-btn.css">
-
+    <link rel="stylesheet" href="src/css/addcard-btn.css" />
+    <link rel="stylesheet" href="src/css/filter-form.css">
   </head>
   <body id="body">
     <header>
       <div class="centralized-container">
         <h1>To Do List</h1>
 
-        <form method="post">
+        <form class="filter-form" method="post">
+          <button class="btn--new">New</button>
           <div class="search">
             <input
               class="search-input"
@@ -33,7 +34,6 @@
               id="search"
               placeholder="Search..." />
           </div>
-          <button class="btn--new">New</button>
         </form>
       </div>
     </header>
