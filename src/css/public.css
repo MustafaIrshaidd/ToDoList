@@ -1,0 +1,8 @@
+:root {
+  --centralized-container--width: 80%;
+}
+
+.centralized-container {
+  width: var(--centralized-container--width);
+  margin: auto;
+}

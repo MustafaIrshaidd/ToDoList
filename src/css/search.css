@@ -1,0 +1,28 @@
+.search{
+    position: relative;
+    width:100%;
+    background-color: #E2E2E2;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+}
+
+.search-input{
+    width: 75%;
+    border:none;
+    outline: none;
+    background-color: transparent;
+}
+
+.search::after{
+    content:'\f002';
+    font-weight: 800;
+    font-size: 0.9rem;
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top:50%;
+    left:5%;
+    transform: translateY(-50%);
+}

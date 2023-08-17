@@ -1,0 +1,10 @@
+.btn--new{
+    width:100%;
+    
+}
+
+.btn--new::before{
+    content:'';
+    position: absolute;
+    
+}
