@@ -6,7 +6,7 @@
 
 @media only screen and (min-width: 765px) {
   .filter-form {
-    flex-direction: row;
+    flex-direction: row-reverse;
     width: 50%;
   }
 
@@ -16,8 +16,8 @@
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 1400px) {
   .filter-form {
-    width: 40%;
+    width: 30%;
   }
 }
