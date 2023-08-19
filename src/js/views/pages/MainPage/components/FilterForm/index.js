@@ -1,10 +1,10 @@
 import { Search } from "../../../../common/forms/Search/index.js";
-import { AddBtn } from "../../../../common/forms/AddBtn/index.js";
+import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/index.js";
 
 export const FilterForm = () => {
   return `<form class="filter-form" method="post">
   ${Search("Search")}
-  ${AddBtn("New")}
+  ${AddToDoCardButton("New",false)}
 </form>`;
 };
 

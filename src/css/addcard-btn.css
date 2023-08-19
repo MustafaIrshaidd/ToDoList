@@ -19,3 +19,29 @@
   transform: translate(-50%, -50%);
   font-size: 1.4rem;
 }
+
+.card {
+  height: 40px;
+  width: 100%;
+  color: rgba(55, 53, 47, 0.35);
+  background-color: white;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+}
+
+@media only screen and (min-width: 765px) {
+  .card {
+    height: auto;
+    width: 45%;
+    transition: background 0.2s ease-out;
+  }
+  .card:hover {
+    background: rgba(55, 53, 47, 0.03);
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .card {
+    width: 30%;
+  }
+}

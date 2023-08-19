@@ -1,0 +1,40 @@
+.add-card--overlay{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.196);
+    
+}
+
+.add-card--popup{
+    position: absolute;
+    bottom: 0;
+    animation: slideUp 1s ease-in-out;
+}
+
+@keyframes slideUp{
+    0%{
+        bottom:-100%;
+    }
+    100%{
+        bottom:0;
+    }
+}
+
+.add-card-image{
+    position: relative;
+}
+
+.add-card-image--cover{
+    object-fit: cover;
+    width:100%;
+}
+
+.add-card-image--icon{
+    position: absolute;
+    bottom:-50%;
+    left:10%;
+    transform: translate(-50%,-50%);
+}
+

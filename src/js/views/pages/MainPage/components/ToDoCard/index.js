@@ -1,4 +1,14 @@
-export const ToDoCard = (id,cardImage,cardIcon,cardTitle,cardStatus,creatorImage,creatorName) => {
+import { Status } from "../../../../common/forms/Status/index.js";
+
+export const ToDoCard = (
+  id,
+  cardImage,
+  cardIcon,
+  cardTitle,
+  cardStatus,
+  creatorImage,
+  creatorName
+) => {
   return `<div class="todo-card">
     <div class="todo-card--edit">
       <i class="fa-solid fa-ellipsis"></i>
@@ -18,15 +28,14 @@ export const ToDoCard = (id,cardImage,cardIcon,cardTitle,cardStatus,creatorImage
           alt="image not found"
           height="24px"
           width="24px" />
+          <span>${id}</span>
         <h3
           class="todo-card--card-body--header-title text-overflow-handler">
-          <span>${id}. </span>${cardTitle}
+          ${cardTitle}
         </h3>
       </div>
 
-      <div class="todo-card--card-body--status">
-        <span class="todo-card--card-body--status-title">${cardStatus}</span>
-      </div>
+      ${Status(cardStatus, true)}
 
       <div class="todo-card--card-body--creator">
         <img

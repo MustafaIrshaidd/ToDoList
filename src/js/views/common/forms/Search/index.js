@@ -4,7 +4,7 @@ export const Search = (placeholder) => {
         <input
           class="search-input"
           type="search"
-          id="search"
+          id="toDoCardsSearch"
           placeholder="${placeholder}"
         />
       </div>

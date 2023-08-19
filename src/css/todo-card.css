@@ -48,18 +48,16 @@
   font-weight: 500;
 }
 
-.todo-card--card-body--status {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  height: 27px;
-  padding: 0px 10px;
-  background-color: #d3e5ef;
-  border-radius: 7px;
-  font-size: 15px;
+.todo-card--card-body--header span {
+  font-size: 20px;
+  font-weight: 500;
 }
+
+.todo-card--card-body--header span::after {
+  content: ". ";
+}
+
+
 
 .todo-card--card-body--creator {
   position: relative;
@@ -96,16 +94,8 @@
     width: 30%;
   }
 
-  .todo-card--card-body--status::before {
-    content: "Status";
-  }
-
   .todo-card--card-body--creator::before {
     content: "Owner";
-  }
-
-  .todo-card--card-body--status::before,
-  .todo-card--card-body--creator::before {
     line-height: 27px;
     position: absolute;
     z-index: 9999;
@@ -122,7 +112,6 @@
     transition: all 0.3s;
   }
 
-  .todo-card--card-body--status:hover::before,
   .todo-card--card-body--creator:hover::before {
     visibility: visible;
     background-color: rgb(25, 51, 71);
