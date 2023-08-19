@@ -1,0 +1,14 @@
+.todo-cards--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5vh;
+}
+
+@media only screen and (min-width: 765px) {
+  .todo-cards--container {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

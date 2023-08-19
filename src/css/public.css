@@ -16,3 +16,9 @@ body {
   width: var(--centralized-container--width);
   margin: auto;
 }
+
+.text-overflow-handler {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

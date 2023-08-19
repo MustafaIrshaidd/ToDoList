@@ -1,5 +1,5 @@
-import { Header } from "./views/pages/components/Header/index.js";
+import { MainPage } from "./views/pages/MainPage/index.js";
 
 export const renderIndexPage = (root) => {
-    root.innerHTML = Header();
+  root.innerHTML = MainPage();
 };

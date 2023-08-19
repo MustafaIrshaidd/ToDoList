@@ -1,0 +1,130 @@
+.todo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.todo-card--edit {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 0 10px;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+  border-radius: 5px;
+  background-color: transparent;
+  visibility: hidden;
+  transition: 0.2s background ease-out;
+}
+
+.todo-card:hover .todo-card--edit {
+  background-color: white;
+  visibility: visible;
+}
+
+.todo-card--card-img {
+  object-fit: cover;
+}
+
+.todo-card--card-body {
+  width: calc(var(--centralized-container--width) + 10%);
+  margin: auto;
+}
+
+.todo-card--card-body--header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-card--card-body--header-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.todo-card--card-body--status {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 27px;
+  padding: 0px 10px;
+  background-color: #d3e5ef;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.todo-card--card-body--creator {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-card--card-body-creator-img {
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.todo-card--card-body-creator-title {
+  font-size: 15px;
+  font-weight: 400;
+  color: #9e9898;
+}
+
+@media only screen and (min-width: 765px) {
+  .todo-card {
+    width: 45%;
+    transition: background 0.2s ease-out;
+  }
+
+  .todo-card:hover {
+    background: rgba(55, 53, 47, 0.03);
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .todo-card {
+    width: 30%;
+  }
+
+  .todo-card--card-body--status::before {
+    content: "Status";
+  }
+
+  .todo-card--card-body--creator::before {
+    content: "Owner";
+  }
+
+  .todo-card--card-body--status::before,
+  .todo-card--card-body--creator::before {
+    line-height: 27px;
+    position: absolute;
+    z-index: 9999;
+    left: -45px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 7px;
+    height: inherit;
+    background-color: transparent;
+    color: white;
+    font-size: inherit;
+    padding: 0 10px;
+    visibility: hidden;
+    transition: all 0.3s;
+  }
+
+  .todo-card--card-body--status:hover::before,
+  .todo-card--card-body--creator:hover::before {
+    visibility: visible;
+    background-color: rgb(25, 51, 71);
+  }
+}
