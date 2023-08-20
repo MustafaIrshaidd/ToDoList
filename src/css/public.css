@@ -1,0 +1,31 @@
+/* Fonts */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@500&display=swap");
+
+:root {
+  --centralized-container--width: 80%;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+.centralized-container {
+  width: var(--centralized-container--width);
+  margin: auto;
+}
+
+.text-overflow-handler {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+li {
+  list-style-type: none;
+}
+ul {
+  padding: 0;
+}

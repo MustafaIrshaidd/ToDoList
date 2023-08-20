@@ -1,0 +1,32 @@
+header {
+  padding: 5vh 0 2.5vh 0;
+}
+
+header .centralized-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 19.5px;
+  padding: 1vh 0;
+}
+
+header h1 {
+  font-weight: 400;
+  margin: 0;
+}
+
+header h1::after {
+  content: "Inspired By Notion";
+  font-size: 0.8rem;
+  padding-left: 10px;
+}
+
+@media only screen and (min-width: 765px) {
+  header .centralized-container {
+    flex-direction: row;
+    align-items: center;
+  }
+  header .centralized-container {
+    border-bottom: 1px solid rgba(87, 87, 87, 0.476);
+  }
+}

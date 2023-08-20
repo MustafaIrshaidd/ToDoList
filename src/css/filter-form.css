@@ -1,0 +1,23 @@
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 19.5px;
+}
+
+@media only screen and (min-width: 765px) {
+  .filter-form {
+    flex-direction: row;
+    width: 50%;
+  }
+
+  .filter-form .search,
+  .filter-form button {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .filter-form {
+    width: 30%;
+  }
+}

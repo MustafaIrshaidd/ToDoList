@@ -1,0 +1,43 @@
+.status {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 27px;
+  padding: 0px 10px;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.in-progress--color {
+  background-color: rgb(253, 236, 200);
+}
+.done--color {
+  background-color: rgb(211, 229, 239);
+}
+
+@media only screen and (min-width: 1000px) {
+  .status--before::before {
+    content: "Status";
+    line-height: 27px;
+    position: absolute;
+    z-index: 9999;
+    left: -45px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 7px;
+    height: inherit;
+    background-color: transparent;
+    color: white;
+    font-size: inherit;
+    padding: 0 10px;
+    visibility: hidden;
+    transition: all 0.3s;
+  }
+
+  .status--before:hover::before {
+    visibility: visible;
+    background-color: rgb(25, 51, 71);
+  }
+}
