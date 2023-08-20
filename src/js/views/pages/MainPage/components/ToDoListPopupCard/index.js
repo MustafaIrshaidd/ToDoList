@@ -9,19 +9,21 @@ export const ToDoListPopUpCard = (
   cardStatus,
   cardDateCreated
 ) => {
+
+
   return `<div class="add-card--overlay">
     <div class="add-card--popup">
       <div class="add-card-content">
         <img
           class="add-card-cover-image"
-          src="assets/images/card-img/git.png"
+          src="assets/images/card-img/${cardImage}"
           alt="image not found" />
 
         <div class="add-card-content--header centralized-container">
           <div class="add-card-content--header--container">
             <img
               class="add-card-image--icon"
-              src="assets/images/card-icon/giticon.png"
+              src="assets/images/card-icon/${cardIcon}"
               alt="image not found" />
             <span>${id}</span>
             <h3 contenteditable="true">${cardTitle}</h3>
@@ -68,7 +70,6 @@ export const ToDoListPopUpCard = (
                 <i class="fa-regular fa-circle"></i> <span>To Do</span>
               </div>
               <ul class="add-card--todo-cards--drag-drop-playground--cards">
-                ${TaskCard("giticon.png",1,"Git Hub")}
                 ${TaskCard("giticon.png",1,"Git Hub")}
                 ${TaskCard("giticon.png",1,"Git Hub")}
                 ${TaskCard("giticon.png",1,"Git Hub")}

@@ -173,6 +173,14 @@
   content: ".";
 }
 
+@keyframes popdown {
+  100%{
+    bottom:-100%;
+    opacity: 0;
+  }
+  
+}
+
 @media only screen and (min-width: 1200px) {
   .add-card--popup {
     bottom: 12.5%;
