@@ -22,3 +22,10 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+li {
+  list-style-type: none;
+}
+ul {
+  padding: 0;
+}
