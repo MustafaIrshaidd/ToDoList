@@ -4,7 +4,7 @@ import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/in
 export const FilterForm = () => {
   return `<form class="filter-form" method="post">
   ${Search("Search")}
-  ${AddToDoCardButton("New",false)}
+  ${AddToDoCardButton("New",false,false)}
 </form>`;
 };
 

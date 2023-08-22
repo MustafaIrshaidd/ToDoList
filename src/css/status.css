@@ -16,6 +16,9 @@
 .done--color {
   background-color: rgb(211, 229, 239);
 }
+.empty--color {
+  background-color: rgb(215 215 215);
+}
 
 @media only screen and (min-width: 1000px) {
   .status--before::before {

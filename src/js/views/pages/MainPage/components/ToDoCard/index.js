@@ -1,7 +1,7 @@
 import { Status } from "../../../../common/forms/Status/index.js";
 
 export const ToDoCard = (
-  id,
+  id=0,
   cardImage,
   cardIcon,
   cardTitle,
@@ -13,17 +13,22 @@ export const ToDoCard = (
     <div class="todo-card--edit">
       <i class="fa-solid fa-ellipsis"></i>
     </div>
+    
+    <div class="todo-card--card-img-container">
     <img
-      class="todo-card--card-img"
-      src="assets/images/card-img/htmlcss.jpg"
-      alt="image not found"
-      height="231px" />
+        class="todo-card--card-img"
+        src="${cardImage}"
+        alt="image not found"
+        height="231px"
+        onerror="this.style.display='none'; this.parentNode.style.backgroundColor='white'; this.parentNode.style.display='block';"
+    />
+    </div>
 
     <div class="todo-card--card-body">
       <div class="todo-card--card-body--header">
         <img
           class="todo-card--card-body--header-img"
-          src="assets/images/card-icon/giticon.png"
+          src="${cardIcon}"
           onerror="this.onerror=null; this.src='assets/images/card-icon/notfound.svg'"
           alt="image not found"
           height="24px"

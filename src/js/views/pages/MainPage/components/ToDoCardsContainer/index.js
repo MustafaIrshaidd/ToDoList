@@ -1,23 +1,27 @@
 import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/index.js";
 import { ToDoCard } from "../ToDoCard/index.js";
+import { getLocalStorageItem } from "../../../../../../utils/localStorage.js";
 
 export const ToDoCardsContainer = () => {
-  let cardsHTML = ""; // Initialize an empty string to store the HTML for the cards
+  let cardsData = getLocalStorageItem("toDoCards"); // Initialize an empty string to store the HTML for the cards
+  
 
-  for (let i = 0; i < 11; i++) {
+  let cardsHTML = ``;
+
+  cardsData?.forEach((element,index) => {
     cardsHTML += ToDoCard(
-      i + 1,
-      "fsfsa",
-      "fsaf",
-      "HTML & CSS",
-      1,
+      index + 1,
+      element.cardImage,
+      element.cardIcon,
+      element.cardTitle,
+      element.cardStatus,
       "fsafsa",
       "Mustafa Irshaid"
     );
-  }
+  });
 
   return `
     <div class="todo-cards--container">
-      ${cardsHTML + AddToDoCardButton("New",true)}
+      ${cardsHTML + AddToDoCardButton("New", true, false)}
     </div>`;
 };

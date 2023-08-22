@@ -8,7 +8,7 @@ export const TaskCard = (cardIcon,id,cardTitle) => {
         height="25px"
         width="25px" />
       <span>${id}</span>
-      <p>${cardTitle}</p>
+      <p contenteditable="true">${cardTitle}</p>
     </div>
     <i class="fa-solid fa-ellipsis"></i>
   </li>`;

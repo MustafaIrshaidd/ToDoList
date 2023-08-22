@@ -21,12 +21,17 @@
 }
 
 .card {
-  height: 40px;
+  height: 49px;
   width: 100%;
   color: rgba(55, 53, 47, 0.35);
   background-color: white;
   box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
     rgba(15, 15, 15, 0.1) 0px 2px 4px;
+}
+
+.task{
+  width:100% !important;
+  height: 40px !important;
 }
 
 @media only screen and (min-width: 765px) {
@@ -38,6 +43,7 @@
   .card:hover {
     background: rgba(55, 53, 47, 0.03);
   }
+  
 }
 
 @media only screen and (min-width: 1000px) {

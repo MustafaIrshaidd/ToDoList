@@ -1,4 +1,5 @@
 const statusTypes = {
+  0: ["Empty" , "empty--color"],
   1: ["In Progress", "in-progress--color"],
   2: ["Done", "done--color"],
 };
