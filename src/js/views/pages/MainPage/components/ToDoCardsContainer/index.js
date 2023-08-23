@@ -3,8 +3,7 @@ import { ToDoCard } from "../ToDoCard/index.js";
 import { getLocalStorageItem } from "../../../../../../utils/localStorage.js";
 
 export const ToDoCardsContainer = () => {
-  let cardsData = getLocalStorageItem("toDoCards"); // Initialize an empty string to store the HTML for the cards
-  
+  let cardsData = getLocalStorageItem("ToDoCards"); // Initialize an empty string to store the HTML for the cards
 
   let cardsHTML = ``;
 

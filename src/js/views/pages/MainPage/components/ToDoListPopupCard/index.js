@@ -1,17 +1,21 @@
-import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/index.js";
+
 import { Status } from "../../../../common/forms/Status/index.js";
-import { TaskCard } from "../TaskCard/index.js";
+
 import { formatDate } from "../../../../../../utils/formatters.js";
+import { TasksList } from "../../TasksList/index.js";
+
 
 
 export const ToDoListPopUpCard = (
-  id = 0,
+  id = 1,
   cardImage = "",
   cardIcon = "",
   cardTitle = "Untitled",
   cardStatus = 0,
-  cardDateCreated = formatDate("en-US")
+  cardDateCreated = formatDate("en-US"),
+  tasks = {}
 ) => {
+  console.log(tasks);
   return `<div class="add-card--overlay">
     <div class="add-card--popup">
       <div class="add-card-content">
@@ -76,31 +80,9 @@ export const ToDoListPopUpCard = (
             </li>
           </ul>
           <ul class="add-card--todo-cards--drag-drop-playground">
-            <li class="todo">
-              <div class="add-card--todo-cards--drag-drop-playground--header">
-                <i class="fa-regular fa-circle"></i> <span>To Do</span>
-              </div>
-              <ul class="add-card--todo-cards--drag-drop-playground--cards">
-                ${AddToDoCardButton("New", true, true)}
-              </ul>
-            </li>
-            <li class="inprogress">
-              <div class="add-card--todo-cards--drag-drop-playground--header">
-                <i class="fa-regular fa-circle-play"></i>
-                <span>In Progress</span>
-              </div>
-              <ul class="add-card--todo-cards--drag-drop-playground--cards">
-                ${AddToDoCardButton("New", true, true)}
-              </ul>
-            </li>
-            <li class="done">
-              <div class="add-card--todo-cards--drag-drop-playground--header">
-                <i class="fa-regular fa-circle-check"></i> <span>Done</span>
-              </div>
-              <ul class="add-card--todo-cards--drag-drop-playground--cards">
-                ${AddToDoCardButton("New", true, true)}
-              </ul>
-            </li>
+            ${TasksList(0,tasks.toDo,cardIcon)}
+            ${TasksList(1,tasks.inProgress,cardIcon)}
+            ${TasksList(2,tasks.done,cardIcon)}
           </ul>
         </div>
       </div>

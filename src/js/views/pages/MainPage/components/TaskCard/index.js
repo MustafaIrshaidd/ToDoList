@@ -6,7 +6,8 @@ export const TaskCard = (cardIcon,id,cardTitle) => {
         src="assets/images/card-icon/${cardIcon}"
         alt="image not found"
         height="25px"
-        width="25px" />
+        width="25px" 
+        onerror="this.onerror=null; this.src='assets/images/card-icon/notfound.svg'"/>
       <span>${id}</span>
       <p contenteditable="true">${cardTitle}</p>
     </div>

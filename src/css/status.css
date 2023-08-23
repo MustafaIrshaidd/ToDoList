@@ -5,9 +5,45 @@
   align-items: center;
   width: fit-content;
   height: 27px;
-  padding: 0px 10px;
   border-radius: 7px;
   font-size: 15px;
+}
+
+.status-title {
+  padding: 0px 10px;
+}
+
+.status-list-popup {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  top: 120%;
+  background: white;
+  min-width: 250px;
+  z-index: 9;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+  border-radius: 8px;
+}
+
+.status-list-popup .status {
+  margin-top: 10px;
+  margin-left: 20px;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.8em;
+}
+
+.status-list-popup .status:hover {
+  transform: scale(1.1);
+}
+
+.status-list-popup .status:first-child {
+  margin-top: 15px;
+}
+
+.status-list-popup .status:last-child {
+  margin-bottom: 15px;
 }
 
 .in-progress--color {

@@ -31,9 +31,19 @@ export const removeLocalStorageItem = (key) => {
   }
 };
 
-// Add a new object to a local storage array
-export const addNewObjectToLocalStorageArray = (localStorageKey, newObject) => {
+// Add a new object to a local storage array or indicate adding a new object with id -1
+export const addOrUpdateObjectToLocalStorageArray = (
+  localStorageKey,
+  newObject,
+  id = -1
+) => {
   const existingArray = getLocalStorageItem(localStorageKey) || [];
-  existingArray.push(newObject);
+
+  if (id >= 0) {
+    existingArray[id - 1] = newObject;
+  } else {
+    existingArray.push(newObject);
+  }
+
   setLocalStorageItem(localStorageKey, existingArray);
 };

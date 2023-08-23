@@ -124,6 +124,10 @@
   font-weight: 600;
 }
 
+.add-card--todo-cards--drag-drop-playground--header .tasks-count{
+  margin-left:10px;
+}
+
 .add-card--todo-cards--drag-drop-playground
   li:nth-child(1)
   .add-card--todo-cards--drag-drop-playground--header {
@@ -177,6 +181,20 @@
 
 .add-card--todo-cards--drag-drop-playground--cards span::after {
   content: ".";
+}
+
+.add-card--todo-cards--drag-drop-playground--cards .active{
+  position: relative;
+  
+}
+
+.add-card--todo-cards--drag-drop-playground--cards .active::before{
+  content:'';
+  width: 100%;
+  height: 3px;
+  background-color: cyan;
+  position: absolute;
+  top:0;
 }
 
 .cover-image {
