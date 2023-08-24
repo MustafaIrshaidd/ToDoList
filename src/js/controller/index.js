@@ -8,11 +8,14 @@ import {
   renderPlaygroundTasks,
 } from "../model/index.js";
 
-const onClickRemovePopupCardHandler = (body, id) => {
+let debounceTimeout;
+
+const onClickRemovePopupCardHandler = (body, id, isNewCard) => {
   const popupOverlay = body.querySelector(".add-card--overlay");
 
   popupOverlay.addEventListener("click", (ev) => {
-    !ev.target.closest(".add-card--popup") && removePopUpCard(popupOverlay, id);
+    !ev.target.closest(".add-card--popup") &&
+      removePopUpCard(popupOverlay, id, isNewCard);
   });
 };
 
@@ -70,13 +73,15 @@ const addPlaygroundHandler = (playground, id) => {
         const targetTag = ev.target.tagName;
 
         if (targetTag === "LI" || targetTag === "IMG" || targetTag === "P") {
-          let taskIndex = ev.target
+          let senderTaskIndex = ev.target
             .closest("li")
             .querySelector("span").innerText;
           let senderContainerIndex = containerIndex;
+          let taskTitle = ev.target.querySelector("p").innerText;
+
           ev.dataTransfer.setData(
             "application/json",
-            JSON.stringify({ ev, taskIndex, senderContainerIndex })
+            JSON.stringify({ senderTaskIndex, senderContainerIndex, taskTitle })
           );
         }
       });
@@ -101,15 +106,26 @@ const addPlaygroundHandler = (playground, id) => {
             let data = ev.dataTransfer.getData("application/json");
             data = JSON.parse(data);
             closestLi.classList.remove("active");
+
             const recieverContainerIndex = containerIndex;
-            renderPlaygroundTasks({...data, recieverContainerIndex});
+            const recieverTaskIndex = closestLi.querySelector("span").innerText;
+
+            clearTimeout(debounceTimeout);
+
+            debounceTimeout = setTimeout(() => {
+              renderPlaygroundTasks(
+                { ...data, recieverContainerIndex, recieverTaskIndex },
+                id
+              );
+              addPlaygroundHandler(playground, id);
+            }, 20);
           }
         }
       });
     });
 };
 
-export const addPopUpCardHandlers = (body, id = -1) => {
+export const addPopUpCardHandlers = (body, isNewCard, id) => {
   const imgInputHelper = document.querySelectorAll(".image-input");
   const imgInputHelperLabel = document.querySelectorAll(".image-label");
   const playground = document.querySelector(
@@ -121,8 +137,6 @@ export const addPopUpCardHandlers = (body, id = -1) => {
     status.parentNode.addEventListener("click", (event) => {
       event.preventDefault();
 
-      console.log(event);
-
       const statusTitle = event.target.closest(".status-title");
 
       statusTitle && onClickStatusHandler(statusTitle, id);
@@ -132,7 +146,7 @@ export const addPopUpCardHandlers = (body, id = -1) => {
 
   addImageHandler(imgInputHelper, imgInputHelperLabel);
 
-  onClickRemovePopupCardHandler(body, id);
+  onClickRemovePopupCardHandler(body, id, isNewCard);
 };
 
 const onClickAddNewCardHandler = (body) => {
@@ -142,8 +156,8 @@ const onClickAddNewCardHandler = (body) => {
     addNewCard.forEach((newCardBtn) => {
       newCardBtn.addEventListener("click", (ev) => {
         ev.preventDefault();
-        showPopUpCard(body);
-        addPopUpCardHandlers(body);
+        showPopUpCard(body, 0, true);
+        addPopUpCardHandlers(body, true);
       });
     });
 };
@@ -199,7 +213,7 @@ const onClickToDoCardHandler = (body) => {
         }
 
         showPopUpCard(body, id);
-        addPopUpCardHandlers(body, id);
+        addPopUpCardHandlers(body, false, id);
       }
     });
 };

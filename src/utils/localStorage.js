@@ -35,14 +35,15 @@ export const removeLocalStorageItem = (key) => {
 export const addOrUpdateObjectToLocalStorageArray = (
   localStorageKey,
   newObject,
-  id = -1
+  isNew,
+  id=1
 ) => {
   const existingArray = getLocalStorageItem(localStorageKey) || [];
 
-  if (id >= 0) {
-    existingArray[id - 1] = newObject;
-  } else {
+  if (isNew) {
     existingArray.push(newObject);
+  } else {
+    existingArray[id - 1] = newObject;
   }
 
   setLocalStorageItem(localStorageKey, existingArray);

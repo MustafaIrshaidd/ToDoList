@@ -1,10 +1,7 @@
-
 import { Status } from "../../../../common/forms/Status/index.js";
 
 import { formatDate } from "../../../../../../utils/formatters.js";
 import { TasksList } from "../../TasksList/index.js";
-
-
 
 export const ToDoListPopUpCard = (
   id = 1,
@@ -15,7 +12,6 @@ export const ToDoListPopUpCard = (
   cardDateCreated = formatDate("en-US"),
   tasks = {}
 ) => {
-  console.log(tasks);
   return `<div class="add-card--overlay">
     <div class="add-card--popup">
       <div class="add-card-content">
@@ -80,9 +76,9 @@ export const ToDoListPopUpCard = (
             </li>
           </ul>
           <ul class="add-card--todo-cards--drag-drop-playground">
-            ${TasksList(0,tasks.toDo,cardIcon)}
-            ${TasksList(1,tasks.inProgress,cardIcon)}
-            ${TasksList(2,tasks.done,cardIcon)}
+            ${TasksList(0, tasks.todo, cardIcon)}
+            ${TasksList(1, tasks.inprogress, cardIcon)}
+            ${TasksList(2, tasks.done, cardIcon)}
           </ul>
         </div>
       </div>
