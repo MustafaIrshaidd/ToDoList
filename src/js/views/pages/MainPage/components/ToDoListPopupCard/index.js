@@ -1,7 +1,7 @@
 import { Status } from "../../../../common/forms/Status/index.js";
 
 import { formatDate } from "../../../../../../utils/formatters.js";
-import { TasksList } from "../../TasksList/index.js";
+import { TasksList } from "../TasksList/index.js";
 
 export const ToDoListPopUpCard = (
   id = 1,

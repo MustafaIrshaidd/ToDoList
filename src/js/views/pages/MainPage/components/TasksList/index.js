@@ -1,5 +1,5 @@
-import { AddToDoCardButton } from "../../../common/forms/AddToDoCardButton/index.js";
-import { TaskCard } from "../components/TaskCard/index.js";
+import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/index.js";
+import { TaskCard } from "../TaskCard/index.js";
 
 export const ListTypes = {
   0: ["To Do", "todo"],
@@ -15,6 +15,7 @@ export const TasksList = (type, tasks, cardIcon) => {
       }</span><span class="tasks-count">${tasks ? tasks.length : 0}</span>
     </div>
     <ul class="add-card--todo-cards--drag-drop-playground--cards">
+    
     ${
       tasks
         ? tasks
@@ -24,7 +25,7 @@ export const TasksList = (type, tasks, cardIcon) => {
             .join("")
         : ``
     }
-      ${AddToDoCardButton("New", true, true)}
+    ${AddToDoCardButton("New", true, true)}
     </ul>
   </li>`;
 };

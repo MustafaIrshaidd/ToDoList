@@ -6,6 +6,7 @@ import {
   showPopupStatus,
   updateStatus,
   renderPlaygroundTasks,
+  renderToDoCardsContainer,
 } from "../model/index.js";
 
 let debounceTimeout;
@@ -55,6 +56,7 @@ const addPlaygroundHandler = (playground, id) => {
   playground &&
     playground.addEventListener("click", (ev) => {
       if (ev.target.tagName == "BUTTON") {
+
         addTaskCard(ev, id);
       }
     });
@@ -111,12 +113,13 @@ const addPlaygroundHandler = (playground, id) => {
             const recieverTaskIndex = closestLi.querySelector("span").innerText;
 
             clearTimeout(debounceTimeout);
-
+            console.log(id)
             debounceTimeout = setTimeout(() => {
               renderPlaygroundTasks(
                 { ...data, recieverContainerIndex, recieverTaskIndex },
                 id
               );
+
               addPlaygroundHandler(playground, id);
             }, 20);
           }
@@ -167,7 +170,7 @@ const onChangeSearchHandler = (body) => {
 
   searchInput &&
     searchInput.addEventListener("input", (ev) => {
-      console.log(ev.target.value);
+      renderToDoCardsContainer(ev.target.value);
     });
 };
 
@@ -205,6 +208,7 @@ const onClickToDoCardHandler = (body) => {
         const id = ToDoCard.querySelector(
           ".todo-card--card-body--header span"
         ).innerText;
+
 
         if (status) {
           onClickStatusHandler(status, id);

@@ -1,18 +1,19 @@
 import { MainPage } from "../views/pages/MainPage/index.js";
 import { TaskCard } from "../views/pages/MainPage/components/TaskCard/index.js";
 import { ToDoCard } from "../views/pages/MainPage/components/ToDoCard/index.js";
+import { ToDoCardsContainer } from "../views/pages/MainPage/components/ToDoCardsContainer/index.js";
 import { ToDoListPopUpCard } from "../views/pages/MainPage/components/ToDoListPopupCard/index.js";
 import {
   ListTypes,
   TasksList,
-} from "../views/pages/MainPage/TasksList/index.js";
+} from "../views/pages/MainPage/components/TasksList/index.js";
 import {
   setLocalStorageItem,
   getLocalStorageItem,
-  addOrUpdateObjectToLocalStorageArray,
+  addOrUpdateKeyInLocalStorage,
 } from "../../utils/localStorage.js";
 import { Status, statusTypes } from "../views/common/forms/Status/index.js";
-
+let generatedID = 1;
 const ToDoCardObjSchema = {
   title: "Untitled",
   cardImg: "",
@@ -24,6 +25,12 @@ const ToDoCardObjSchema = {
     done: [],
   },
   cardStatus: 0,
+}
+
+const statusIndeces = {
+  Empty: 0,
+  "In Progress": 1,
+  Done: 2,
 };
 
 const renderTasksList = (type, className, id) => {
@@ -44,13 +51,14 @@ const renderTasksList = (type, className, id) => {
 };
 
 export const renderPlaygroundTasks = (data, id) => {
+
   const senderClassName = ListTypes[data.senderContainerIndex];
   const recieverClassName = ListTypes[data.recieverContainerIndex];
 
   const toDoCards = getLocalStorageItem("ToDoCards");
 
-  id ? (id = id - 1) : (id = toDoCards.length - 1);
-
+   id = id ?? (generatedID);
+   console.log(id)
   toDoCards[id].tasks[senderClassName[1]].splice(data.senderTaskIndex - 1, 1);
   toDoCards[id].tasks[recieverClassName[1]].splice(
     data.recieverTaskIndex - 1,
@@ -58,20 +66,15 @@ export const renderPlaygroundTasks = (data, id) => {
     data.taskTitle
   );
 
-  addOrUpdateObjectToLocalStorageArray(
+  const newObj =structuredClone(toDoCards[id])
+console.log(id)
+  addOrUpdateKeyInLocalStorage(
     "ToDoCards",
-    toDoCards[id],
-    false,
-    id + 1
+    id,
+    newObj
   );
   renderTasksList(data.senderContainerIndex, senderClassName[1], id);
   renderTasksList(data.recieverContainerIndex, recieverClassName[1], id);
-};
-
-const statusIndeces = {
-  Empty: 0,
-  "In Progress": 1,
-  Done: 2,
 };
 
 export const showPopupStatus = (statusContainer) => {
@@ -99,7 +102,7 @@ const appendToDoCardToCardsContainer = (element, obj) => {
   const newElement = document.createElement("div");
 
   newElement.innerHTML = ToDoCard(
-    data?.length,
+    Object.keys(data)?.length,
     obj.cardImg,
     obj.cardIcon,
     obj.title,
@@ -111,6 +114,7 @@ const appendToDoCardToCardsContainer = (element, obj) => {
   const newCard = newElement.querySelector(".todo-card");
 
   cardsContainerAddBtn.parentNode.insertBefore(newCard, cardsContainerAddBtn);
+  generatedID = generatedID + 1;
 };
 
 export const updateStatus = async (statusPopup, statusTitle, id, isPopup) => {
@@ -162,32 +166,27 @@ const updateToDoCardInCardsContainer = (id, data) => {
     "fsafsa",
     "Mustafa Irshaid"
   );
+
+
   const newCard = newElement.querySelector(".todo-card");
-
+  console.log(id)
   const oldCard = cardContainer.querySelectorAll(".todo-card")[id - 1];
-
+  console.log(oldCard)
   cardContainer.replaceChild(newCard, oldCard);
+
 };
 
 export const showPopUpCard = (body, id, isNewCard) => {
-  const toDoCardTemp = structuredClone(ToDoCardObjSchema);
-
-  isNewCard &&
-    addOrUpdateObjectToLocalStorageArray("ToDoCards", toDoCardTemp, true);
+  let cardObj
+  isNewCard ? cardObj=structuredClone(ToDoCardObjSchema) : cardObj=getLocalStorageItem("ToDoCards")[id];
+console.log(cardObj)
+  addOrUpdateKeyInLocalStorage("ToDoCards", isNewCard ? generatedID : id, cardObj);
 
   const popUpCard = document.createElement("div");
 
-  const data = getLocalStorageItem("ToDoCards");
-  let cardObj;
-
-  if (isNewCard) {
-    cardObj = data[data.length - 1];
-  } else {
-    cardObj = data[id - 1];
-  }
 
   popUpCard.innerHTML = ToDoListPopUpCard(
-    id,
+    isNewCard ? generatedID : id,
     cardObj.cardImg,
     cardObj.cardIcon,
     cardObj.title,
@@ -201,6 +200,7 @@ export const showPopUpCard = (body, id, isNewCard) => {
 
 const collectPopUpCardData = (element, id, isNewCard = false) => {
   let ToDoCardObject = structuredClone(ToDoCardObjSchema);
+  ToDoCardObject.id = 0
 
   const imageCover = document
     .querySelector(".cover-image img")
@@ -223,7 +223,7 @@ const collectPopUpCardData = (element, id, isNewCard = false) => {
 
   ToDoCardObject.cardStatus =
     statusIndeces[
-      element.querySelector(".add-card-info .status span").innerText
+    element.querySelector(".add-card-info .status span").innerText
     ];
 
   const toDoTasks = element.querySelectorAll(
@@ -250,8 +250,9 @@ const collectPopUpCardData = (element, id, isNewCard = false) => {
     (doneTask) => doneTask.innerText
   );
   const toDoCards = getLocalStorageItem("ToDoCards");
-  id ? id : (id = toDoCards.length);
-  addOrUpdateObjectToLocalStorageArray("ToDoCards", ToDoCardObject, false, id);
+  id &&
+    addOrUpdateKeyInLocalStorage("ToDoCards", id, ToDoCardObject);
+
   isNewCard
     ? appendToDoCardToCardsContainer(element, ToDoCardObject)
     : updateToDoCardInCardsContainer(id, ToDoCardObject);
@@ -279,20 +280,39 @@ export const addTaskCard = (ev, id) => {
   const categoryClassName = ev.target.closest("li").className;
 
   const toDoCards = getLocalStorageItem("ToDoCards");
-  id ? id : (id = toDoCards.length);
 
-  const toDoCard = toDoCards[id - 1];
+  id = id ?? Object.keys(toDoCards).length;
 
-  toDoCard.tasks[categoryClassName].push("Untitled");
+  toDoCards[id].tasks[categoryClassName].push("Untitled");
 
-  addOrUpdateObjectToLocalStorageArray("ToDoCards", toDoCard, false, id);
+  addOrUpdateKeyInLocalStorage("ToDoCards",id, toDoCards[id]);
 
   newElement = newElement.querySelector("li");
 
   ev.target.parentNode.insertBefore(newElement, ev.target);
 };
 
+const searchByTitle = (searchQuery, dataArray) => {
+  return dataArray.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+};
+
+export const renderToDoCardsContainer = (searchQuery) => {
+
+  const toDoCards = getLocalStorageItem("ToDoCards");
+
+
+  const matchingItems = searchByTitle(searchQuery, toDoCards)
+
+  const existingContainer = document.querySelector(".todo-cards--container");
+
+  const newContainer = ToDoCardsContainer(matchingItems);
+
+  existingContainer.innerHTML = newContainer.innerHTML;
+}
+
 export const renderIndexPage = (body) => {
   body.innerHTML = MainPage();
-  setLocalStorageItem("ToDoCards", []);
+  setLocalStorageItem("ToDoCards", {});
 };
