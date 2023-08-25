@@ -2,16 +2,12 @@ import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/in
 import { ToDoCard } from "../ToDoCard/index.js";
 import { getLocalStorageItem } from "../../../../../../utils/localStorage.js";
 
-export const ToDoCardsContainer = (data={}) => {
-  
-  const cardsData = data.length > 0 ? data : getLocalStorageItem("ToDoCards");
+export const ToDoCardsContainer = (dataObject={}) => {
 
-  console.log(data);
-
+if(Object.keys(dataObject).length === 0) dataObject=getLocalStorageItem("ToDoCards")
+   
   let cardsHTML = ``;
-
-
-  Object.entries(data).forEach(([key, value]) => {
+  Object.entries(dataObject).forEach(([key, value]) => {
     console.log(key)
     cardsHTML += ToDoCard(
       key,

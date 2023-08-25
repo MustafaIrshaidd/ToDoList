@@ -1,5 +1,4 @@
 import { Status } from "../../../../common/forms/Status/index.js";
-
 import { formatDate } from "../../../../../../utils/formatters.js";
 import { TasksList } from "../TasksList/index.js";
 
@@ -9,8 +8,8 @@ export const ToDoListPopUpCard = (
   cardIcon = "",
   cardTitle = "Untitled",
   cardStatus = 0,
-  cardDateCreated = formatDate("en-US"),
-  tasks = {}
+  tasks = {},
+  cardDateCreated = formatDate("en-US")
 ) => {
   return `<div class="add-card--overlay">
     <div class="add-card--popup">

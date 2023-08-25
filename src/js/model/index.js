@@ -57,8 +57,8 @@ export const renderPlaygroundTasks = (data, id) => {
 
   const toDoCards = getLocalStorageItem("ToDoCards");
 
-   id = id ?? (generatedID);
-   console.log(id)
+  id = id ?? (generatedID);
+  console.log(id)
   toDoCards[id].tasks[senderClassName[1]].splice(data.senderTaskIndex - 1, 1);
   toDoCards[id].tasks[recieverClassName[1]].splice(
     data.recieverTaskIndex - 1,
@@ -66,8 +66,8 @@ export const renderPlaygroundTasks = (data, id) => {
     data.taskTitle
   );
 
-  const newObj =structuredClone(toDoCards[id])
-console.log(id)
+  const newObj = structuredClone(toDoCards[id])
+  console.log(id)
   addOrUpdateKeyInLocalStorage(
     "ToDoCards",
     id,
@@ -178,8 +178,8 @@ const updateToDoCardInCardsContainer = (id, data) => {
 
 export const showPopUpCard = (body, id, isNewCard) => {
   let cardObj
-  isNewCard ? cardObj=structuredClone(ToDoCardObjSchema) : cardObj=getLocalStorageItem("ToDoCards")[id];
-console.log(cardObj)
+  isNewCard ? cardObj = structuredClone(ToDoCardObjSchema) : cardObj = getLocalStorageItem("ToDoCards")[id];
+  console.log(cardObj)
   addOrUpdateKeyInLocalStorage("ToDoCards", isNewCard ? generatedID : id, cardObj);
 
   const popUpCard = document.createElement("div");
@@ -191,7 +191,6 @@ console.log(cardObj)
     cardObj.cardIcon,
     cardObj.title,
     cardObj.cardStatus,
-    cardObj.cardDate,
     cardObj.tasks
   );
 
@@ -285,25 +284,24 @@ export const addTaskCard = (ev, id) => {
 
   toDoCards[id].tasks[categoryClassName].push("Untitled");
 
-  addOrUpdateKeyInLocalStorage("ToDoCards",id, toDoCards[id]);
+  addOrUpdateKeyInLocalStorage("ToDoCards", id, toDoCards[id]);
 
   newElement = newElement.querySelector("li");
 
   ev.target.parentNode.insertBefore(newElement, ev.target);
 };
 
-const searchByTitle = (searchQuery, dataArray) => {
-  return dataArray.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+const searchByTitle = (obj, searchQuery) => {
+  return Object.keys(obj).map(key => obj[key])
+    .filter(item =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 };
 
 export const renderToDoCardsContainer = (searchQuery) => {
-
   const toDoCards = getLocalStorageItem("ToDoCards");
 
-
-  const matchingItems = searchByTitle(searchQuery, toDoCards)
+  const matchingItems = searchByTitle(toDoCards, searchQuery)
 
   const existingContainer = document.querySelector(".todo-cards--container");
 

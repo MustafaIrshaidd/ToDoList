@@ -1,11 +1,6 @@
 import { FilterForm } from "../FilterForm/index.js"
 
 export const Header = () => {
-
-
-
-
-  
     return (
         `<header>
     <div class="centralized-container">
