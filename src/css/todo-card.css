@@ -9,7 +9,7 @@
   cursor: pointer;
 }
 
-.todo-card--edit {
+.edit-btn--card {
   position: absolute;
   z-index: 1;
   top: 10px;
@@ -23,7 +23,7 @@
   transition: 0.2s background ease-out;
 }
 
-.todo-card:hover .todo-card--edit {
+.todo-card:hover .edit-btn--card {
   background-color: white;
   visibility: visible;
 }

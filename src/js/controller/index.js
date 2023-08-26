@@ -1,3 +1,4 @@
+import { getLocalStorageItem } from "../../utils/localStorage.js";
 import {
   renderIndexPage,
   removePopUpCard,
@@ -7,7 +8,11 @@ import {
   updateStatus,
   renderPlaygroundTasks,
   renderToDoCardsContainer,
+  showPopupEdit,
+  deleteToDoCardInCardsContainer,
 } from "../model/index.js";
+import { EditList } from "../views/common/EditList/index.js";
+import { Loader } from "../views/common/Loader/index.js";
 
 let debounceTimeout;
 
@@ -56,7 +61,6 @@ const addPlaygroundHandler = (playground, id) => {
   playground &&
     playground.addEventListener("click", (ev) => {
       if (ev.target.tagName == "BUTTON") {
-
         addTaskCard(ev, id);
       }
     });
@@ -91,7 +95,12 @@ const addPlaygroundHandler = (playground, id) => {
       playgroundSection.addEventListener("dragover", (ev) => {
         ev.preventDefault();
         const targetTag = ev.target.tagName;
-        if (targetTag === "DIV" || targetTag === "IMG" || targetTag === "P") {
+        if (
+          targetTag === "DIV" ||
+          targetTag === "IMG" ||
+          targetTag === "P" ||
+          targetTag === "BUTTON"
+        ) {
           const closestLi = ev.target.closest("li");
           if (closestLi) {
             closestLi.classList.add("active");
@@ -102,7 +111,12 @@ const addPlaygroundHandler = (playground, id) => {
       playgroundSection.addEventListener("drop", (ev) => {
         ev.preventDefault();
         const targetTag = ev.target.tagName;
-        if (targetTag === "DIV" || targetTag === "IMG" || targetTag === "P") {
+        if (
+          targetTag === "DIV" ||
+          targetTag === "IMG" ||
+          targetTag === "P" ||
+          targetTag === "BUTTON"
+        ) {
           const closestLi = ev.target.closest("li");
           if (closestLi) {
             let data = ev.dataTransfer.getData("application/json");
@@ -110,10 +124,14 @@ const addPlaygroundHandler = (playground, id) => {
             closestLi.classList.remove("active");
 
             const recieverContainerIndex = containerIndex;
-            const recieverTaskIndex = closestLi.querySelector("span").innerText;
+            let recieverTaskIndex;
+            if (targetTag === "BUTTON") {
+              recieverTaskIndex = null;
+            } else {
+              recieverTaskIndex = closestLi.querySelector("span").innerText;
+            }
 
             clearTimeout(debounceTimeout);
-            console.log(id)
             debounceTimeout = setTimeout(() => {
               renderPlaygroundTasks(
                 { ...data, recieverContainerIndex, recieverTaskIndex },
@@ -145,6 +163,15 @@ export const addPopUpCardHandlers = (body, isNewCard, id) => {
       statusTitle && onClickStatusHandler(statusTitle, id);
     });
 
+  const editBtn = document.querySelector(".add-card--popup .edit-btn");
+
+  editBtn &&
+    editBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      handleShowEditPopup(id, editBtn, isNewCard);
+    });
+
   addPlaygroundHandler(playground, id);
 
   addImageHandler(imgInputHelper, imgInputHelperLabel);
@@ -165,6 +192,14 @@ const onClickAddNewCardHandler = (body) => {
     });
 };
 
+const onClickDeleteCardHandler = (id, isNewCard) => {
+  const todoCards = getLocalStorageItem("ToDoCards");
+
+  const { [id]: _, ...restCards } = todoCards;
+
+  !isNewCard && deleteToDoCardInCardsContainer(id);
+};
+
 const onChangeSearchHandler = (body) => {
   const searchInput = body.querySelector(".search-input");
 
@@ -176,10 +211,15 @@ const onChangeSearchHandler = (body) => {
 
 const onClickChangeStatusHandler = (statusPopup, id) => {
   statusPopup.addEventListener("click", (event) => {
+    event.preventDefault();
+
     const statusTitle = event.target.closest(".status-title");
     const popupCard = Boolean(event.target.closest(".add-card--popup"));
 
-    statusTitle && updateStatus(statusPopup, statusTitle, id, popupCard);
+    if (statusTitle) {
+      event.stopPropagation(); // Stop the event from further propagating
+      updateStatus(statusPopup, statusTitle, id, popupCard);
+    }
   });
 };
 
@@ -196,7 +236,33 @@ const onClickStatusHandler = (status, id) => {
   );
 };
 
-const onClickToDoCardHandler = (body) => {
+const handleClickEditButton = (id, editBtn, isNewCard) => {
+  editBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const pressedEditBtn = event.target.closest("button");
+
+    if (pressedEditBtn) {
+      if (pressedEditBtn.classList.contains("edit-list--btn-Delete")) {
+        const popupOverlay = event.target.closest(".add-card--overlay");
+        popupOverlay && popupOverlay.remove();
+
+        onClickDeleteCardHandler(id, isNewCard);
+        return;
+      }
+    } else {
+      editBtn.innerHTML = "";
+    }
+  });
+};
+
+const handleShowEditPopup = (id, editBtn, isNewCard) => {
+  !editBtn.querySelector(".edit-popup") && showPopupEdit(id, editBtn);
+
+  handleClickEditButton(id, editBtn, isNewCard);
+};
+
+export const onClickToDoCardHandler = (body) => {
   const ToDoCardsContainer = body.querySelector(".todo-cards--container");
 
   ToDoCardsContainer &&
@@ -209,6 +275,13 @@ const onClickToDoCardHandler = (body) => {
           ".todo-card--card-body--header span"
         ).innerText;
 
+        const editBtn = ev.target.closest(".edit-btn");
+
+        if (editBtn) {
+          handleShowEditPopup(id, editBtn);
+
+          return;
+        }
 
         if (status) {
           onClickStatusHandler(status, id);
@@ -223,6 +296,7 @@ const onClickToDoCardHandler = (body) => {
 };
 
 window.onload = () => {
+  // document.body.innerHTML = Loader(true);
   renderIndexPage(document.body);
   onClickToDoCardHandler(document.body);
   onChangeSearchHandler(document.body);

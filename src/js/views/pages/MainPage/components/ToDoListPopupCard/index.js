@@ -39,7 +39,9 @@ export const ToDoListPopUpCard = (
             <h3 contenteditable="true">${cardTitle}</h3>
           </div>
 
-          <i class="fa-solid fa-ellipsis"></i>
+          
+          <i class="fa-solid fa-ellipsis edit-btn edit-btn--popup"></i>
+          
         </div>
       </div>
       <div class="centralized-container">

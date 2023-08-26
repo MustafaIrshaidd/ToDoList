@@ -1,0 +1,36 @@
+.edit-list {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  background-color: white;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+}
+
+.edit-list::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+}
+
+.edit-list--btn {
+  position: relative;
+  text-align: start;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  padding: 5px 10px;
+  color: #222222;
+  font-family: "Inter", sans-serif;
+  z-index: 5;
+}
+
+.edit-list--btn:hover {
+  background-color: #dcdcdc;
+}

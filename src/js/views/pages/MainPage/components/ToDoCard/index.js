@@ -1,7 +1,7 @@
 import { Status } from "../../../../common/forms/Status/index.js";
 
 export const ToDoCard = (
-  id=0,
+  id = 0,
   cardImage,
   cardIcon,
   cardTitle,
@@ -10,9 +10,9 @@ export const ToDoCard = (
   creatorName
 ) => {
   return `<div class="todo-card">
-    <div class="todo-card--edit">
-      <i class="fa-solid fa-ellipsis"></i>
-    </div>
+    
+    <i class="fa-solid fa-ellipsis edit-btn edit-btn--card"></i>
+    
     
     <div class="todo-card--card-img-container">
     <img

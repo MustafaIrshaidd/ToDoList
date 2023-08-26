@@ -25,7 +25,9 @@ export const TasksList = (type, tasks, cardIcon) => {
             .join("")
         : ``
     }
+    <li>
     ${AddToDoCardButton("New", true, true)}
+    </li>
     </ul>
   </li>`;
 };
