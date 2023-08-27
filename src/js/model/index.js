@@ -17,6 +17,11 @@ import { onClickToDoCardHandler } from "../controller/index.js";
 import { EditList } from "../views/common/EditList/index.js";
 
 let generatedID = 1;
+
+const incrementGeneratedID = ()=>{
+  generatedID+=1;
+  setLocalStorageItem("ToDoCardsID",generatedID);
+}
 const ToDoCardObjSchema = {
   title: "Untitled",
   cardImg: "",
@@ -95,7 +100,7 @@ export const showPopupStatus = (statusContainer) => {
   statusContainer.appendChild(statusList);
 };
 
-const appendToDoCardToCardsContainer = (element, obj) => {
+const appendToDoCardToCardsContainer = (element, obj, id) => {
   const cardsContainerAddBtn = element
     .closest("body")
     .querySelector(".todo-cards--container button");
@@ -105,7 +110,7 @@ const appendToDoCardToCardsContainer = (element, obj) => {
   const newElement = document.createElement("div");
 
   newElement.innerHTML = ToDoCard(
-    Object.keys(data)?.length,
+    generatedID,
     obj.cardImg,
     obj.cardIcon,
     obj.title,
@@ -117,7 +122,8 @@ const appendToDoCardToCardsContainer = (element, obj) => {
   const newCard = newElement.querySelector(".todo-card");
 
   cardsContainerAddBtn.parentNode.insertBefore(newCard, cardsContainerAddBtn);
-  generatedID = generatedID + 1;
+
+  incrementGeneratedID();
 };
 
 export const updateStatus = (statusPopup, statusTitle, id, isPopup) => {
@@ -234,7 +240,6 @@ export const showPopupEdit = (id, editBtn) => {
 
 const collectPopUpCardData = (element, id, isNewCard = false) => {
   let ToDoCardObject = structuredClone(ToDoCardObjSchema);
-  ToDoCardObject.id = 0;
 
   const imageCover = document
     .querySelector(".cover-image img")
@@ -287,7 +292,7 @@ const collectPopUpCardData = (element, id, isNewCard = false) => {
   id && addOrUpdateKeyInLocalStorage("ToDoCards", id, ToDoCardObject);
 
   isNewCard
-    ? appendToDoCardToCardsContainer(element, ToDoCardObject)
+    ? appendToDoCardToCardsContainer(element, ToDoCardObject, id)
     : updateToDoCardInCardsContainer(id, ToDoCardObject);
 };
 
@@ -359,6 +364,14 @@ export const renderToDoCardsContainer = (searchQuery) => {
 };
 
 export const renderIndexPage = (body) => {
-  setLocalStorageItem("ToDoCards", {});
+  if (getLocalStorageItem("ToDoCards") == null) {
+    setLocalStorageItem("ToDoCards", {});
+  }
+
+  if (getLocalStorageItem("ToDoCardsID") === null) {
+    setLocalStorageItem("ToDoCardsID", 1);
+  } 
+  generatedID = getLocalStorageItem("ToDoCardsID")
+
   body.innerHTML = MainPage();
 };

@@ -1,4 +1,4 @@
-import { getLocalStorageItem } from "../../utils/localStorage.js";
+import { addOrUpdateKeyInLocalStorage, getLocalStorageItem, setLocalStorageItem } from "../../utils/localStorage.js";
 import {
   renderIndexPage,
   removePopUpCard,
@@ -11,8 +11,6 @@ import {
   showPopupEdit,
   deleteToDoCardInCardsContainer,
 } from "../model/index.js";
-import { EditList } from "../views/common/EditList/index.js";
-import { Loader } from "../views/common/Loader/index.js";
 
 let debounceTimeout;
 
@@ -197,6 +195,8 @@ const onClickDeleteCardHandler = (id, isNewCard) => {
 
   const { [id]: _, ...restCards } = todoCards;
 
+setLocalStorageItem("ToDoCards",restCards);
+
   !isNewCard && deleteToDoCardInCardsContainer(id);
 };
 
@@ -296,7 +296,6 @@ export const onClickToDoCardHandler = (body) => {
 };
 
 window.onload = () => {
-  // document.body.innerHTML = Loader(true);
   renderIndexPage(document.body);
   onClickToDoCardHandler(document.body);
   onChangeSearchHandler(document.body);
