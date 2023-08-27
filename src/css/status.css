@@ -1,0 +1,82 @@
+.status {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 27px;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.status-title {
+  padding: 0px 10px;
+}
+
+.status-list-popup {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  top: 120%;
+  background: white;
+  min-width: 250px;
+  z-index: 9;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+  border-radius: 8px;
+}
+
+.status-list-popup .status {
+  margin-top: 10px;
+  margin-left: 20px;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.8em;
+}
+
+.status-list-popup .status:hover {
+  transform: scale(1.1);
+}
+
+.status-list-popup .status:first-child {
+  margin-top: 15px;
+}
+
+.status-list-popup .status:last-child {
+  margin-bottom: 15px;
+}
+
+.in-progress--color {
+  background-color: rgb(253, 236, 200);
+}
+.done--color {
+  background-color: rgb(211, 229, 239);
+}
+.empty--color {
+  background-color: rgb(215 215 215);
+}
+
+@media only screen and (min-width: 1000px) {
+  .status--before::before {
+    content: "Status";
+    line-height: 27px;
+    position: absolute;
+    z-index: 9999;
+    left: -45px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 7px;
+    height: inherit;
+    background-color: transparent;
+    color: white;
+    font-size: inherit;
+    padding: 0 10px;
+    visibility: hidden;
+    transition: all 0.3s;
+  }
+
+  .status--before:hover::before {
+    visibility: visible;
+    background-color: rgb(25, 51, 71);
+  }
+}

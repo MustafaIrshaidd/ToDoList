@@ -1,0 +1,357 @@
+.add-card--overlay {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.196);
+}
+
+.add-card--popup {
+  position: absolute;
+  z-index: 9999;
+  bottom: 0%;
+  height: 50vh;
+  width: 100%;
+  animation: slideUp 1s ease-in-out;
+  overflow-y: scroll;
+  border-radius: 30px 30px 0 0;
+  background-color: white;
+  overflow-y: scroll;
+}
+
+.add-card--popup::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -100%;
+  }
+  100% {
+    bottom: 0%;
+  }
+}
+
+.cover-image {
+  display: none;
+}
+
+.add-card-content--header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 30px;
+}
+
+.add-card-content--header > i {
+  cursor: pointer;
+}
+
+.add-card-content--header--container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-card-content--header span {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.add-card-content--header span::after {
+  content: ".";
+}
+
+.icon-image img {
+  height: 25px;
+  width: 25px;
+  object-fit: cover;
+}
+
+.add-card-info {
+  display: grid;
+  grid-template-columns: 0.8fr 2.2fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.add-card-info .grid-item {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: #595757;
+  font-size: 14px;
+}
+
+.add-card-info .grid-item .status span {
+  font-size: 14px;
+}
+
+.add-card--todo-cards--categories {
+  display: flex;
+  gap: 20px;
+  min-width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.add-card--todo-cards--categories li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 55px;
+  padding: 0 10px;
+}
+
+.add-card--todo-cards--categories .active {
+  border-bottom: 2px solid black;
+}
+
+.add-card--todo-cards--drag-drop-playground--cards {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.add-card--todo-cards--drag-drop-playground--cards li {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.add-card--todo-cards--drag-drop-playground--header {
+  padding-bottom: 20px;
+  font-weight: 600;
+}
+
+.add-card--todo-cards--drag-drop-playground--header .tasks-count{
+  margin-left:10px;
+}
+
+.add-card--todo-cards--drag-drop-playground
+  li:nth-child(1)
+  .add-card--todo-cards--drag-drop-playground--header {
+  color: #00000070;
+}
+
+.add-card--todo-cards--drag-drop-playground
+  li:nth-child(2)
+  .add-card--todo-cards--drag-drop-playground--header {
+  color: #337ea9;
+}
+
+.add-card--todo-cards--drag-drop-playground
+  li:nth-child(3)
+  .add-card--todo-cards--drag-drop-playground--header {
+  color: #448361;
+}
+
+.add-card--todo-cards--drag-drop-playground--cards li {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 2px 4px;
+  border-radius: 8px;
+  align-items: center;
+  font-size: 15px;
+
+  position: relative;
+}
+
+.add-card--todo-cards--drag-drop-playground--cards i {
+  padding-right: 10px;
+  height: 100%;
+}
+
+.add-card--todo-cards--drag-drop-playground--card--content {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+  font-size: 15px;
+  padding-left: 10px;
+  position: relative;
+}
+
+.add-card--todo-cards--drag-drop-playground--cards p {
+  max-width: 80%;
+}
+
+.add-card--todo-cards--drag-drop-playground--cards span::after {
+  content: ".";
+}
+
+.add-card--todo-cards--drag-drop-playground--cards .active{
+  position: relative;
+  
+}
+
+.add-card--todo-cards--drag-drop-playground--cards .active::before{
+  content:'';
+  z-index: 9999;
+  width: 100%;
+  height: 3px;
+  background-color: cyan;
+  position: absolute;
+  top:0;
+}
+
+.cover-image {
+  display: none !important;
+}
+
+.custom__image-container input {
+  opacity: 0;
+  height: 0;
+  display: none;
+}
+
+.cover-image--scale {
+  width: 100%;
+  height: 227px;
+}
+
+.custom__image-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.custom__image-container label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 64px;
+  font-weight: 100;
+  background-color: #c0bcbc;
+  color: white;
+  color: black;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.icon-image--scale {
+  width: 25px;
+  height: 25px;
+  font-size: 32px !important;
+  font-weight: 300 !important;
+  background-color: white !important;
+}
+
+@keyframes popdown {
+  100% {
+    bottom: -100%;
+    opacity: 0;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .add-card--popup {
+    bottom: 12.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 75vh;
+    width: var(--centralized-container--width);
+    animation: slideUpLaptop 1s ease-in-out;
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  @keyframes slideUpLaptop {
+    0% {
+      bottom: -100%;
+      opacity: 0;
+    }
+    100% {
+      bottom: 12.5%;
+      opacity: 1;
+    }
+  }
+
+  .add-card-content--header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 100px;
+    gap: 10px;
+  }
+
+  .add-card-content--header > i {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: block;
+    background-color: white;
+    padding: 5px 10px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+      rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    font-size: 15px;
+  }
+
+  .icon-image--scale {
+    position: absolute;
+    top: calc(227px - 50px);
+    left: 14%;
+    transform: translateX(-50%);
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+  }
+
+  .add-card-content--header,
+  .add-card-content--header span {
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  .add-card-info .grid-item {
+    font-size: 15px;
+  }
+
+  .add-card--todo-cards--categories {
+    overflow-x: hidden;
+  }
+
+  .add-card--todo-cards--drag-drop-playground {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 30px;
+    width: 100%;
+    min-height: 50vh;
+  }
+
+  .add-card--todo-cards--drag-drop-playground > li {
+    width: 30%;
+  }
+
+  .cover-image {
+    display: block !important;
+  }
+
+  .custom__image-container label {
+    color: white !important;
+  }
+
+  .cover-image img {
+    display: block;
+    width: 100%;
+    height: 227px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .icon-image img {
+    display: block;
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover;
+  }
+
+  .icon-image--scale {
+    background-color: #aaa7a7 !important;
+  }
+}
