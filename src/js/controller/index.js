@@ -1,4 +1,4 @@
-import { addOrUpdateKeyInLocalStorage, getLocalStorageItem, setLocalStorageItem } from "../../utils/localStorage.js";
+import { getLocalStorageItem, setLocalStorageItem } from "../../utils/localStorage.js";
 import {
   renderIndexPage,
   removePopUpCard,
@@ -135,7 +135,6 @@ const addPlaygroundHandler = (playground, id) => {
                 { ...data, recieverContainerIndex, recieverTaskIndex },
                 id
               );
-
               addPlaygroundHandler(playground, id);
             }, 20);
           }

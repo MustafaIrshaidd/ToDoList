@@ -18,10 +18,11 @@ import { EditList } from "../views/common/EditList/index.js";
 
 let generatedID = 1;
 
-const incrementGeneratedID = ()=>{
-  generatedID+=1;
-  setLocalStorageItem("ToDoCardsID",generatedID);
-}
+const incrementGeneratedID = () => {
+  generatedID += 1;
+  setLocalStorageItem("ToDoCardsID", generatedID);
+};
+
 const ToDoCardObjSchema = {
   title: "Untitled",
   cardImg: "",
@@ -39,6 +40,36 @@ const statusIndeces = {
   Empty: 0,
   "In Progress": 1,
   Done: 2,
+};
+
+const collectTasksListData = (ToDoCardObject) => {
+  const element = document.body.querySelector(".add-card--overlay");
+
+  const toDoTasks = element.querySelectorAll(
+    ".todo .add-card--todo-cards--drag-drop-playground--cards p"
+  );
+  ToDoCardObject.tasks.todo = Array.from(
+    toDoTasks,
+    (toDoTask) => toDoTask.innerText
+  );
+
+  const inProgressTasks = element.querySelectorAll(
+    ".inprogress .add-card--todo-cards--drag-drop-playground--cards p"
+  );
+  ToDoCardObject.tasks.inprogress = Array.from(
+    inProgressTasks,
+    (inProgressTask) => inProgressTask.innerText
+  );
+
+  const doneTasks = element.querySelectorAll(
+    ".done .add-card--todo-cards--drag-drop-playground--cards p"
+  );
+  ToDoCardObject.tasks.done = Array.from(
+    doneTasks,
+    (doneTask) => doneTask.innerText
+  );
+
+  return ToDoCardObject;
 };
 
 const renderTasksList = (type, className, id) => {
@@ -63,8 +94,10 @@ export const renderPlaygroundTasks = (data, id) => {
   const recieverClassName = ListTypes[data.recieverContainerIndex];
 
   const toDoCards = getLocalStorageItem("ToDoCards");
-
+  
   id = id ?? generatedID;
+
+  toDoCards[id] = collectTasksListData(toDoCards[id]);
 
   toDoCards[id].tasks[senderClassName[1]].splice(data.senderTaskIndex - 1, 1);
   if (data.recieverTaskIndex) {
@@ -265,29 +298,8 @@ const collectPopUpCardData = (element, id, isNewCard = false) => {
       element.querySelector(".add-card-info .status span").innerText
     ];
 
-  const toDoTasks = element.querySelectorAll(
-    ".todo .add-card--todo-cards--drag-drop-playground--cards p"
-  );
-  ToDoCardObject.tasks.todo = Array.from(
-    toDoTasks,
-    (toDoTask) => toDoTask.innerText
-  );
+  ToDoCardObject = collectTasksListData(ToDoCardObject);
 
-  const inProgressTasks = element.querySelectorAll(
-    ".inprogress .add-card--todo-cards--drag-drop-playground--cards p"
-  );
-  ToDoCardObject.tasks.inprogress = Array.from(
-    inProgressTasks,
-    (inProgressTask) => inProgressTask.innerText
-  );
-
-  const doneTasks = element.querySelectorAll(
-    ".done .add-card--todo-cards--drag-drop-playground--cards p"
-  );
-  ToDoCardObject.tasks.done = Array.from(
-    doneTasks,
-    (doneTask) => doneTask.innerText
-  );
   const toDoCards = getLocalStorageItem("ToDoCards");
   id && addOrUpdateKeyInLocalStorage("ToDoCards", id, ToDoCardObject);
 
@@ -370,8 +382,8 @@ export const renderIndexPage = (body) => {
 
   if (getLocalStorageItem("ToDoCardsID") === null) {
     setLocalStorageItem("ToDoCardsID", 1);
-  } 
-  generatedID = getLocalStorageItem("ToDoCardsID")
+  }
+  generatedID = getLocalStorageItem("ToDoCardsID");
 
   body.innerHTML = MainPage();
 };
