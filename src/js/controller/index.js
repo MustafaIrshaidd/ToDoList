@@ -55,13 +55,7 @@ const addImageHandler = (imgInputHelpers, imgInputHelperLabels) => {
   });
 };
 
-const addPlaygroundHandler = (playground, id) => {
-  playground &&
-    playground.addEventListener("click", (ev) => {
-      if (ev.target.tagName == "BUTTON") {
-        addTaskCard(ev, id);
-      }
-    });
+const handleDragDropOnTasks = (playground, id) => {
 
   playground
     .querySelectorAll(".add-card--todo-cards--drag-drop-playground--cards")
@@ -135,11 +129,21 @@ const addPlaygroundHandler = (playground, id) => {
                 { ...data, recieverContainerIndex, recieverTaskIndex },
                 id
               );
-              addPlaygroundHandler(playground, id);
+              handleDragDropOnTasks(playground, id);
             }, 20);
           }
         }
       });
+    });
+
+}
+
+const handleClickAddNewTask = (playground, id) => {
+  playground &&
+    playground.addEventListener("click", (ev) => {
+      if (ev.target.tagName == "BUTTON") {
+        addTaskCard(ev, id);
+      }
     });
 };
 
@@ -169,7 +173,8 @@ export const addPopUpCardHandlers = (body, isNewCard, id) => {
       handleShowEditPopup(id, editBtn, isNewCard);
     });
 
-  addPlaygroundHandler(playground, id);
+  handleClickAddNewTask(playground, id);
+  handleDragDropOnTasks(playground, id)
 
   addImageHandler(imgInputHelper, imgInputHelperLabel);
 
@@ -194,7 +199,7 @@ const onClickDeleteCardHandler = (id, isNewCard) => {
 
   const { [id]: _, ...restCards } = todoCards;
 
-setLocalStorageItem("ToDoCards",restCards);
+  setLocalStorageItem("ToDoCards", restCards);
 
   !isNewCard && deleteToDoCardInCardsContainer(id);
 };

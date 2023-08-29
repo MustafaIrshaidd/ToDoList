@@ -133,12 +133,10 @@ export const showPopupStatus = (statusContainer) => {
   statusContainer.appendChild(statusList);
 };
 
-const appendToDoCardToCardsContainer = (element, obj, id) => {
+const appendToDoCardToCardsContainer = (element, obj) => {
   const cardsContainerAddBtn = element
     .closest("body")
     .querySelector(".todo-cards--container button");
-
-  const data = getLocalStorageItem("ToDoCards");
 
   const newElement = document.createElement("div");
 
@@ -230,8 +228,6 @@ export const deleteToDoCardInCardsContainer = (id) => {
   });
 
   deletedCard?.[0].remove();
-
-  // cardContainer.removeChild(deletedCard);
 };
 
 export const showPopUpCard = (body, id, isNewCard) => {
@@ -293,6 +289,7 @@ const collectPopUpCardData = (element, id, isNewCard = false) => {
     ".add-card-info .date-created p"
   ).innerText;
 
+
   ToDoCardObject.cardStatus =
     statusIndeces[
       element.querySelector(".add-card-info .status span").innerText
@@ -301,10 +298,13 @@ const collectPopUpCardData = (element, id, isNewCard = false) => {
   ToDoCardObject = collectTasksListData(ToDoCardObject);
 
   const toDoCards = getLocalStorageItem("ToDoCards");
+
+id = id ?? generatedID
+console.log(ToDoCardObject.cardDate)
   id && addOrUpdateKeyInLocalStorage("ToDoCards", id, ToDoCardObject);
 
   isNewCard
-    ? appendToDoCardToCardsContainer(element, ToDoCardObject, id)
+    ? appendToDoCardToCardsContainer(element, ToDoCardObject)
     : updateToDoCardInCardsContainer(id, ToDoCardObject);
 };
 
@@ -320,7 +320,7 @@ export const addTaskCard = (ev, id) => {
 
   const countLabel = section.querySelector(".tasks-count");
 
-  countLabel.innerText = parseInt(countLabel.innerText, 10) + 1;
+  
 
   newElement.innerHTML = TaskCard(
     "",
@@ -332,9 +332,11 @@ export const addTaskCard = (ev, id) => {
 
   const toDoCards = getLocalStorageItem("ToDoCards");
 
-  id = id ?? Object.keys(toDoCards).length;
+  id = id ?? generatedID;
 
   toDoCards[id].tasks[categoryClassName].push("Untitled");
+
+  countLabel.innerText = parseInt(countLabel.innerText, 10) + 1;
 
   addOrUpdateKeyInLocalStorage("ToDoCards", id, toDoCards[id]);
 
