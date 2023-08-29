@@ -166,8 +166,8 @@ export const updateStatus = (statusPopup, statusTitle, id, isPopup) => {
 
   if (!isPopup) {
     const todoCards = getLocalStorageItem("ToDoCards");
-    let ToDoCardObject = todoCards?.[id - 1] || {};
-
+    let ToDoCardObject = todoCards?.[id] || {};
+    console.log(ToDoCardObject)
     ToDoCardObject = {
       ...ToDoCardObject,
       ["cardStatus"]: statusIndex,
