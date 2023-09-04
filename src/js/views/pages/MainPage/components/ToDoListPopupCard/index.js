@@ -1,15 +1,15 @@
 import { Status } from "../../../../common/forms/Status/index.js";
-import { formatDate } from "../../../../../../utils/formatters.js";
 import { TasksList } from "../TasksList/index.js";
 
 export const ToDoListPopUpCard = (
-  id = 1,
+  id,
   cardImage = "",
   cardIcon = "",
   cardTitle = "Untitled",
   cardStatus = 0,
   tasks = {},
-  cardDateCreated = formatDate("en-US")
+  cardDateCreated ,
+  index
 ) => {
   return `<div class="add-card--overlay">
     <div class="add-card--popup">
@@ -35,7 +35,8 @@ export const ToDoListPopUpCard = (
               }</label>
               <input class="image-input" type="file" id="add-icon-img" accept="image/jpeg" />
             </div>
-            <span>${id}</span>
+            <span class="index">${index}</span>
+            <span class="id">${id}</span>
             <h3 contenteditable="true">${cardTitle}</h3>
           </div>
 

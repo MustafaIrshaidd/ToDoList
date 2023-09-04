@@ -62,13 +62,17 @@
   font-weight: 500;
 }
 
-.todo-card--card-body--header span {
+.todo-card--card-body--header .index {
   font-size: 20px;
   font-weight: 500;
 }
 
-.todo-card--card-body--header span::after {
+.todo-card--card-body--header .index::after {
   content: ". ";
+}
+
+.todo-card--card-body--header .id{
+  display: none;
 }
 
 

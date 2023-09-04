@@ -1,4 +1,4 @@
-import { getLocalStorageItem, setLocalStorageItem } from "../../utils/localStorage.js";
+import { deleteToDoListByID } from "../../api/todolistServices.js";
 import {
   renderIndexPage,
   removePopUpCard,
@@ -17,9 +17,9 @@ let debounceTimeout;
 const onClickRemovePopupCardHandler = (body, id, isNewCard) => {
   const popupOverlay = body.querySelector(".add-card--overlay");
 
-  popupOverlay.addEventListener("click", (ev) => {
+  popupOverlay.addEventListener("click", async (ev) => {
     !ev.target.closest(".add-card--popup") &&
-      removePopUpCard(popupOverlay, id, isNewCard);
+      (await removePopUpCard(popupOverlay, id, isNewCard));
   });
 };
 
@@ -55,14 +55,7 @@ const addImageHandler = (imgInputHelpers, imgInputHelperLabels) => {
   });
 };
 
-const addPlaygroundHandler = (playground, id) => {
-  playground &&
-    playground.addEventListener("click", (ev) => {
-      if (ev.target.tagName == "BUTTON") {
-        addTaskCard(ev, id);
-      }
-    });
-
+const handleDragDropOnTasks = (playground, id) => {
   playground
     .querySelectorAll(".add-card--todo-cards--drag-drop-playground--cards")
     .forEach((playgroundSection, containerIndex) => {
@@ -130,16 +123,25 @@ const addPlaygroundHandler = (playground, id) => {
             }
 
             clearTimeout(debounceTimeout);
-            debounceTimeout = setTimeout(() => {
-              renderPlaygroundTasks(
+            debounceTimeout = setTimeout(async () => {
+              await renderPlaygroundTasks(
                 { ...data, recieverContainerIndex, recieverTaskIndex },
                 id
               );
-              addPlaygroundHandler(playground, id);
+              handleDragDropOnTasks(playground, id);
             }, 20);
           }
         }
       });
+    });
+};
+
+const handleClickAddNewTask = (playground, id) => {
+  playground &&
+    playground.addEventListener("click", (ev) => {
+      if (ev.target.tagName == "BUTTON") {
+        addTaskCard(ev, id);
+      }
     });
 };
 
@@ -169,32 +171,29 @@ export const addPopUpCardHandlers = (body, isNewCard, id) => {
       handleShowEditPopup(id, editBtn, isNewCard);
     });
 
-  addPlaygroundHandler(playground, id);
+  handleClickAddNewTask(playground, id);
+  handleDragDropOnTasks(playground, id);
 
   addImageHandler(imgInputHelper, imgInputHelperLabel);
 
   onClickRemovePopupCardHandler(body, id, isNewCard);
 };
 
-const onClickAddNewCardHandler = (body) => {
+const onClickAddNewCardHandler = async (body) => {
   const addNewCard = body.querySelectorAll(".add-todo--card");
 
   addNewCard &&
     addNewCard.forEach((newCardBtn) => {
-      newCardBtn.addEventListener("click", (ev) => {
+      newCardBtn.addEventListener("click", async (ev) => {
         ev.preventDefault();
-        showPopUpCard(body, 0, true);
+        await showPopUpCard(body, 0, true);
         addPopUpCardHandlers(body, true);
       });
     });
 };
 
-const onClickDeleteCardHandler = (id, isNewCard) => {
-  const todoCards = getLocalStorageItem("ToDoCards");
-
-  const { [id]: _, ...restCards } = todoCards;
-
-setLocalStorageItem("ToDoCards",restCards);
+const onClickDeleteCardHandler = async (id, isNewCard) => {
+  await deleteToDoListByID(id);
 
   !isNewCard && deleteToDoCardInCardsContainer(id);
 };
@@ -265,13 +264,16 @@ export const onClickToDoCardHandler = (body) => {
   const ToDoCardsContainer = body.querySelector(".todo-cards--container");
 
   ToDoCardsContainer &&
-    ToDoCardsContainer.addEventListener("click", (ev) => {
+    ToDoCardsContainer.addEventListener("click", async (ev) => {
       const ToDoCard = ev.target.closest(".todo-card");
       const status = ev.target.closest(".status-title");
 
       if (ToDoCard) {
         const id = ToDoCard.querySelector(
-          ".todo-card--card-body--header span"
+          ".todo-card--card-body--header .id"
+        ).innerText;
+        const index = ToDoCard.querySelector(
+          ".todo-card--card-body--header .index"
         ).innerText;
 
         const editBtn = ev.target.closest(".edit-btn");
@@ -288,14 +290,14 @@ export const onClickToDoCardHandler = (body) => {
           return;
         }
 
-        showPopUpCard(body, id);
+        await showPopUpCard(body, id, false, index);
         addPopUpCardHandlers(body, false, id);
       }
     });
 };
 
-window.onload = () => {
-  renderIndexPage(document.body);
+window.onload = async () => {
+  await renderIndexPage(document.body);
   onClickToDoCardHandler(document.body);
   onChangeSearchHandler(document.body);
   onClickAddNewCardHandler(document.body);

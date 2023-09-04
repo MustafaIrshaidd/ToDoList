@@ -1,12 +1,12 @@
 import { ToDoCardsContainer } from '../ToDoCardsContainer/index.js'
 
-export const Main = () => {
+export const Main = async () => {
   return (
     `
     <main>
       <div class="centralized-container">
 
-         ${ToDoCardsContainer()}
+         ${await ToDoCardsContainer()}
 
       </div>
     </main>

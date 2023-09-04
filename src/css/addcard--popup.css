@@ -56,13 +56,17 @@
   gap: 10px;
 }
 
-.add-card-content--header span {
+.add-card-content--header .index {
   font-size: 18px;
   font-weight: 500;
 }
 
-.add-card-content--header span::after {
+.add-card-content--header .index::after {
   content: ".";
+}
+
+.add-card-content--header .id{
+  display: none;
 }
 
 .icon-image img {
@@ -302,7 +306,7 @@
   }
 
   .add-card-content--header,
-  .add-card-content--header span {
+  .add-card-content--header .index {
     font-size: 30px;
     font-weight: 500;
   }
