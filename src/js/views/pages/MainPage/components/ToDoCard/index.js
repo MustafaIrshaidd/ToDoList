@@ -1,13 +1,14 @@
 import { Status } from "../../../../common/forms/Status/index.js";
 
 export const ToDoCard = (
-  id = 0,
+  id,
   cardImage,
   cardIcon,
   cardTitle,
   cardStatus,
   creatorImage,
-  creatorName
+  creatorName,
+  index
 ) => {
   return `<div class="todo-card">
     
@@ -33,7 +34,8 @@ export const ToDoCard = (
           alt="image not found"
           height="24px"
           width="24px" />
-          <span>${id}</span>
+          <span class="index">${index}</span>
+          <span class="id">${id}</span>
         <h3
           class="todo-card--card-body--header-title text-overflow-handler">
           ${cardTitle}

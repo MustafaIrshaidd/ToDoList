@@ -1,22 +1,21 @@
 import { AddToDoCardButton } from "../../../../common/forms/AddToDoCardButton/index.js";
 import { ToDoCard } from "../ToDoCard/index.js";
-import { getLocalStorageItem } from "../../../../../../utils/localStorage.js";
+import { getToDoLists } from "../../../../../../api/todolistServices.js";
 
-export const ToDoCardsContainer = (dataObject={}) => {
-
-if(Object.keys(dataObject).length === 0) dataObject=getLocalStorageItem("ToDoCards")
+export const ToDoCardsContainer = async (dataArray = []) => {
+  if (dataArray.length === 0) dataArray = await getToDoLists();
 
   let cardsHTML = ``;
-  Object.entries(dataObject).forEach(([key, value]) => {
-    console.log(value)
+  dataArray.forEach((obj,index) => {
     cardsHTML += ToDoCard(
-      key,
-      value.cardImg,
-      value.cardIcon,
-      value.title,
-      value.cardStatus,
+      obj._id,
+      obj.cardImg,
+      obj.cardIcon,
+      obj.title,
+      obj.cardStatus,
       "fsafsa",
-      "Mustafa Irshaid"
+      "Mustafa Irshaid",
+      index
     );
   });
 
